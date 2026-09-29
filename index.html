@@ -241,6 +241,7 @@ button{font-family:inherit}
 .modal-card strong{display:block;margin-bottom:16px;font:500 clamp(2.1rem,8vw,2.7rem)/1.08 var(--app-font-serif);letter-spacing:-.02em}
 .modal-card p{color:#6e5d66;font-size:15px;line-height:1.75}
 .modal-close{position:absolute;top:12px;right:14px;width:38px;height:38px;border-radius:50%;border:0;background:transparent;color:#6e5d66;font-size:28px;line-height:1;cursor:pointer;transition:background-color .2s ease}
+.no-button:disabled{opacity:.35;cursor:default;pointer-events:none}
 .modal-close:hover{background:rgba(40,42,72,.08)}
 .modal-close:focus-visible{outline:3px solid rgba(194,101,80,.45);outline-offset:2px}
 </style>
@@ -270,7 +271,7 @@ button{font-family:inherit}
         <h2 class="story-heading">I have learned that the smallest moments can mean the most.</h2>
         <div class="story-copy">
           <p>It is in the message you send when a thought is still warm. In the way a call can begin with, “I have nothing to say,” and somehow leave a whole evening feeling held. It is in the hours spent talking about everything and nothing, in falling asleep on the phone, and in the nights spent playing games together where it hardly matters what we’re doing, as long as you’re there.</p>
-          <p>I think there is something special about the moments that do not need to be planned. The conversations that stretch far past when we meant to go to sleep, the games that somehow turn into hours, and the calls where neither of us really has anything left to say, but neither of us wants to be the first to hang up. Somehow, even the quiet moments feel like something worth keeping.</p>
+          <p>I think there is something special about the moments that do not need to be planned. The conversations that stretch far past when we meant to go to sleep, the games that somehow turn into hours, and the calls where neither of us really has anything left to say, but neither of us wants the conversation to end. Somehow, even the quiet moments feel like something worth keeping.</p>
           <p>But <strong>you make the ordinary feel like something I will remember.</strong> It is not always about doing something exciting or having something important to say. Sometimes it is just hearing your voice, laughing over something stupid, or knowing that somewhere in the middle of an ordinary day, I get to share a little piece of it with you. And I think that is what I love most—not that every moment is extraordinary, but that somehow, with you, even the simplest ones feel like they are.</p>
         </div>
       </div>
@@ -318,7 +319,9 @@ button{font-family:inherit}
   var accepted=false,dodged=false,off={x:0,y:0};
 
   yes.addEventListener('click',function(){
-    accepted=true;note.textContent='';layer.innerHTML='';openModal();
+    accepted=true;note.textContent='';layer.innerHTML='';
+    no.disabled=true;no.setAttribute('aria-disabled','true');off={x:0,y:0};no.style.transform='translate(0,0)';
+    openModal();
     for(var i=0;i<56;i++){
       var s=document.createElement('span');s.className='confetti-piece';
       s.style.setProperty('--x',Math.round((Math.random()-.5)*920)+'px');
@@ -385,6 +388,7 @@ button{font-family:inherit}
   no.addEventListener('pointerenter',move);
   no.addEventListener('pointerdown',move);
   no.addEventListener('click',function(){
+    if(accepted)return;
     if(dodged){dodged=false;return;}
     note.textContent='That is okay. There is no rush; the question will wait for you.';
     off={x:0,y:0};no.style.transform='translate(0,0)';
