@@ -184,18 +184,6 @@ button{font-family:inherit}
 .yes-button:hover { background: #c26550; border-color: #c26550; transform: translateY(-3px); }
 .no-button { touch-action: manipulation; background: transparent; color: #282a48; position: relative; z-index: 2; }
 .no-button:hover { background: #f7eee6; }
-.confirmation {
-  max-width: 540px;
-  margin: 45px auto 0;
-  padding: 25px 28px;
-  background: rgba(247,238,230,.66);
-  border: 1px solid rgba(194,101,80,.35);
-  color: #282a48;
-  text-align: center;
-  animation: rise-in .7s ease both;
-}
-.confirmation strong { display: block; margin-bottom: 8px; font: 500 29px/.9 var(--app-font-serif); }
-.confirmation p { margin: 0; color: #6e5d66; font-size: 13px; line-height: 1.7; }
 .no-note { min-height: 21px; margin: 15px 0 0; color: #8d6968; font-size: 12px; }
 .confetti-layer { position: fixed; inset: 0; z-index: 30; pointer-events: none; overflow: hidden; }
 .confetti-piece { position: absolute; top: 8vh; left: 50%; width: 9px; height: 15px; background: var(--confetti); animation: confetti-fall 2.8s cubic-bezier(.2,.7,.2,1) forwards; animation-delay: var(--delay); }
@@ -228,7 +216,7 @@ button{font-family:inherit}
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
   .no-button { transform: none !important; }
-}.confirmation[hidden]{display:none}
+}
 
 
 /* Stacked-page scroll: each section slides up and over the previous one */
@@ -243,6 +231,18 @@ button{font-family:inherit}
 .letter-page > .s1{z-index:1}.letter-page > .s2{z-index:2}.letter-page > .s3{z-index:3}.letter-page > .s4{z-index:4}
 @media (max-width:760px){.letter-page > .stack + .stack{border-radius:22px 22px 0 0}.letter-page > .distance-section .section-wrap,.letter-page > .story-section .section-wrap{width:min(100% - 38px,600px)}}
 @media (prefers-reduced-motion:reduce){.letter-page > .stack::before{display:none}}
+
+/* "Yes" popup */
+@keyframes fade-in{from{opacity:0}to{opacity:1}}
+@keyframes pop-in{from{opacity:0;transform:translateY(26px) scale(.92)}to{opacity:1;transform:none}}
+.modal{position:fixed;inset:0;z-index:25;display:grid;place-items:center;padding:24px;background:rgba(40,42,72,.58);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);animation:fade-in .35s ease both}
+.modal[hidden]{display:none}
+.modal-card{position:relative;width:min(460px,100%);max-height:calc(100dvh - 48px);overflow:auto;padding:52px 36px 38px;background:#f7eee6;border:1px solid rgba(194,101,80,.35);border-radius:24px;text-align:center;color:#282a48;box-shadow:0 30px 80px rgba(20,21,40,.4);animation:pop-in .55s cubic-bezier(.2,.9,.25,1.12) .05s both}
+.modal-card strong{display:block;margin-bottom:16px;font:500 clamp(2.1rem,8vw,2.7rem)/1.08 var(--app-font-serif);letter-spacing:-.02em}
+.modal-card p{color:#6e5d66;font-size:15px;line-height:1.75}
+.modal-close{position:absolute;top:12px;right:14px;width:38px;height:38px;border-radius:50%;border:0;background:transparent;color:#6e5d66;font-size:28px;line-height:1;cursor:pointer;transition:background-color .2s ease}
+.modal-close:hover{background:rgba(40,42,72,.08)}
+.modal-close:focus-visible{outline:3px solid rgba(194,101,80,.45);outline-offset:2px}
 </style>
 </head>
 <body>
@@ -299,23 +299,26 @@ button{font-family:inherit}
         <button class="answer-button no-button" id="no" type="button" aria-label="Not yet">Not yet</button>
       </div>
       <p class="no-note" id="note" role="status" aria-live="polite"></p>
-      <div class="confirmation" id="confirm" role="status" aria-live="polite" hidden>
-        <strong>Then it is a yes from me, too.</strong>
-        <p>Thank you for choosing this with me, Brynlee. I cannot promise every day will be easy, but I can promise to keep showing up with an open heart and a message waiting.</p>
-      </div>
     </div>
   </section>
   <div class="confetti-layer" id="confetti" aria-hidden="true"></div>
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <div class="modal-card">
+      <button class="modal-close" id="close" type="button" aria-label="Close">×</button>
+      <strong id="modal-title">Then it is a yes from me, too.</strong>
+      <p>Thank you for choosing this with me, Brynlee. I cannot promise every day will be easy, but I can promise to keep showing up with an open heart and a message waiting.</p>
+    </div>
+  </div>
 </main>
 <script>
 (function(){
   var colors=['#c26550','#d6b37c','#282a48','#e39a82','#f7eee6'];
   var yes=document.getElementById('yes'),no=document.getElementById('no'),note=document.getElementById('note'),
-      confirmEl=document.getElementById('confirm'),layer=document.getElementById('confetti');
+      modal=document.getElementById('modal'),closeBtn=document.getElementById('close'),layer=document.getElementById('confetti');
   var accepted=false,dodged=false,off={x:0,y:0};
 
   yes.addEventListener('click',function(){
-    accepted=true;note.textContent='';confirmEl.hidden=false;layer.innerHTML='';
+    accepted=true;note.textContent='';layer.innerHTML='';openModal();
     for(var i=0;i<56;i++){
       var s=document.createElement('span');s.className='confetti-piece';
       s.style.setProperty('--x',Math.round((Math.random()-.5)*920)+'px');
@@ -325,6 +328,20 @@ button{font-family:inherit}
       layer.appendChild(s);
     }
   });
+
+  function openModal(){
+    modal.hidden=false;
+    document.documentElement.style.overflow='hidden';
+    closeBtn.focus({preventScroll:true});
+  }
+  function closeModal(){
+    modal.hidden=true;
+    document.documentElement.style.overflow='';
+    yes.focus({preventScroll:true});
+  }
+  closeBtn.addEventListener('click',closeModal);
+  modal.addEventListener('click',function(e){if(e.target===modal)closeModal();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!modal.hidden)closeModal();});
 
   function move(e){
     if(accepted)return;
