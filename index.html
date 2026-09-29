@@ -1,23 +1,404 @@
 <!DOCTYPE html>
-
-<html> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>For Brynlee</title>
+<meta name="description" content="For Brynlee">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%8C%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-    html, body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-    }
+:root{--background:35 44% 94%;--foreground:231 29% 18%;--app-font-sans:'Manrope',sans-serif;--app-font-serif:'Cormorant Garamond',Georgia,serif;--app-font-mono:'IBM Plex Mono',monospace}
+*,*::before,*::after{box-sizing:border-box;border-width:0;border-style:solid}
+html{scroll-behavior:smooth;scrollbar-width:none;-ms-overflow-style:none}
+html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}
+body{margin:0;background:hsl(var(--background));color:hsl(var(--foreground));font-family:var(--app-font-sans);-webkit-font-smoothing:antialiased;line-height:1.5}
+h1,h2,h3,p{margin:0;font-weight:inherit}
+button,a{-webkit-tap-highlight-color:transparent}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+@keyframes rise-in{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes confetti-fall{0%{opacity:1;transform:translate3d(0,-10px,0) rotate(0)}100%{opacity:0;transform:translate3d(var(--x),84vh,0) rotate(var(--r))}}
+@keyframes pulse-ring{0%,100%{transform:scale(1);opacity:.2}50%{transform:scale(1.06);opacity:.45}}
+.letter-page {
+  min-height: 100dvh;
+  overflow: clip;
+  background: hsl(var(--background));
+}
+.letter-page::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: .25;
+  z-index: 20;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+.section-wrap { width: min(1120px, calc(100% - 48px)); margin-inline: auto; }
+.reveal { animation: rise-in .8s cubic-bezier(.2,.8,.2,1) both; }
+.delay-1 { animation-delay: .12s; }
+.delay-2 { animation-delay: .24s; }
+.delay-3 { animation-delay: .36s; }
 
-    iframe {
-        display: block;
-        width: 100%;
-        height: 100%;
-        border: none;
-    }
+.hero {
+  position: relative;
+  min-height: min(760px, 100dvh);
+  display: flex;
+  align-items: center;
+  background:
+    radial-gradient(circle at 84% 14%, rgba(221, 125, 102, .28), transparent 20rem),
+    radial-gradient(circle at 9% 74%, rgba(198, 165, 100, .16), transparent 24rem),
+    #282a48;
+  color: #f8f0e3;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  width: 460px;
+  height: 460px;
+  right: -140px;
+  top: 100px;
+  border: 1px solid rgba(248, 240, 227, .18);
+  border-radius: 50%;
+  box-shadow: 0 0 0 38px rgba(248, 240, 227, .03), 0 0 0 78px rgba(248, 240, 227, .025);
+  animation: pulse-ring 8s ease-in-out infinite;
+}
+.hero-content { position: relative; z-index: 1; padding-block: 138px 110px; text-align: center; }
+.hero-kicker, .section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font: 500 11px/1 var(--app-font-mono);
+  text-transform: uppercase;
+  letter-spacing: .2em;
+}
+.hero-kicker::before, .section-label::before {
+  content: '';
+  display: block;
+  width: 34px;
+  height: 1px;
+  background: currentColor;
+  opacity: .65;
+}
+.hero h1 {
+  max-width: 830px;
+  margin: 26px auto 24px;
+  font: 500 clamp(4.3rem, 11vw, 9.7rem)/.82 var(--app-font-serif);
+  letter-spacing: -.055em;
+}
+.hero h1 em { color: #e39a82; font-style: normal; }
+.hero-intro {
+  max-width: 475px;
+  margin: 0 auto;
+  color: rgba(248, 240, 227, .74);
+  font-size: 16px;
+  line-height: 1.8;
+}
+.hero-foot {
+  position: absolute;
+  bottom: 34px;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgba(248, 240, 227, .55);
+  font: 11px var(--app-font-mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.scroll-cue { display: flex; gap: 10px; align-items: center; }
+.scroll-cue span { display: block; width: 38px; height: 1px; background: currentColor; }
+
+.top-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: rgba(248, 240, 227, .72);
+}
+.wordmark { color: #f8f0e3; font: 600 17px var(--app-font-serif); letter-spacing: .02em; }
+.nav-link {
+  color: inherit;
+  font: 11px var(--app-font-mono);
+  letter-spacing: .08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color .2s ease;
+}
+.nav-link:hover, .nav-link:focus-visible { color: #e39a82; }
+
+.story-section { padding: 110px 0 100px; }
+.story-intro { display: block; text-align: center; }
+.section-label { color: #c26550; }
+.story-heading {
+  margin: 26px auto 28px;
+  max-width: 740px;
+  font: 500 clamp(2.6rem, 5.6vw, 5.4rem)/.94 var(--app-font-serif);
+  letter-spacing: -.045em;
+}
+.story-copy { max-width: 575px; margin: 0 auto; color: #555469; font-size: 16px; line-height: 1.9; }
+.story-copy p { margin: 0 0 22px; }
+.story-copy p:last-child { margin-bottom: 0; }
+.story-copy strong { color: #282a48; font-weight: 700; }
+
+
+.distance-section { padding: 105px 0 115px; background: #f3e9df; }
+.distance-layout { display: block; text-align: center; }
+.distance-display { max-width: 800px; margin: 26px auto 0; color: #282a48; font: 500 clamp(3.4rem, 7vw, 7rem)/.85 var(--app-font-serif); letter-spacing: -.06em; }
+.distance-display em { color: #c26550; font-style: italic; }
+.distance-copy { max-width: 760px; margin: 48px auto 0; padding-top: 0; color: #626173; font-size: 19px; line-height: 1.9; }
+.distance-copy p { margin: 0 0 24px; }
+.distance-copy p:last-child { margin-bottom: 0; color: #282a48; font-weight: 600; }
+
+
+.proposal-section { position: relative; padding: 125px 0 105px; background: #e9d9d2; text-align: center; }
+.proposal-section::after { content: ''; position: absolute; left: 50%; bottom: 0; width: 1px; height: 80px; background: rgba(40,42,72,.2); }
+.proposal-kicker { color: #c26550; font: 11px var(--app-font-mono); letter-spacing: .18em; text-transform: uppercase; }
+.proposal-title { max-width: 850px; margin: 24px auto 20px; color: #282a48; font: 500 clamp(3.7rem, 8.5vw, 8.7rem)/.79 var(--app-font-serif); letter-spacing: -.06em; }
+.proposal-title em { color: #c26550; font-style: italic; }
+.proposal-subtitle { max-width: 420px; margin: 0 auto 47px; color: #73616a; font-size: 14px; line-height: 1.8; }
+.answer-zone { position: relative; min-height: 74px; width: min(455px, 100%); margin: auto; display: flex; align-items: center; justify-content: center; gap: 16px; }
+.answer-button {
+  min-width: 160px;
+  padding: 16px 25px;
+  border: 1px solid #282a48;
+  border-radius: 999px;
+  font: 700 12px var(--app-font-mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform .25s ease, background-color .25s ease, color .25s ease;
+}
+.answer-button:focus-visible { outline: 3px solid rgba(194,101,80,.45); outline-offset: 4px; }
+.yes-button { background: #282a48; color: #f8f0e3; }
+.yes-button:hover { background: #c26550; border-color: #c26550; transform: translateY(-3px); }
+.no-button { touch-action: manipulation; background: transparent; color: #282a48; position: relative; z-index: 2; }
+.no-button:hover { background: #f7eee6; }
+.confirmation {
+  max-width: 540px;
+  margin: 45px auto 0;
+  padding: 25px 28px;
+  background: rgba(247,238,230,.66);
+  border: 1px solid rgba(194,101,80,.35);
+  color: #282a48;
+  text-align: center;
+  animation: rise-in .7s ease both;
+}
+.confirmation strong { display: block; margin-bottom: 8px; font: 500 29px/.9 var(--app-font-serif); }
+.confirmation p { margin: 0; color: #6e5d66; font-size: 13px; line-height: 1.7; }
+.no-note { min-height: 21px; margin: 15px 0 0; color: #8d6968; font-size: 12px; }
+.confetti-layer { position: fixed; inset: 0; z-index: 30; pointer-events: none; overflow: hidden; }
+.confetti-piece { position: absolute; top: 8vh; left: 50%; width: 9px; height: 15px; background: var(--confetti); animation: confetti-fall 2.8s cubic-bezier(.2,.7,.2,1) forwards; animation-delay: var(--delay); }
+.confetti-piece:nth-child(3n) { border-radius: 50%; }
+.confetti-piece:nth-child(4n) { width: 5px; height: 21px; }
+
+@media (max-width: 760px) {
+  .section-wrap { width: min(100% - 38px, 600px); }
+  .top-nav { height: 64px; }
+  .top-nav .nav-link { display: none; }
+  .hero { min-height: 760px; }
+  .hero-content { padding-block: 115px 90px; }
+  .hero h1 { font-size: clamp(4.3rem, 19vw, 7rem); }
+  .hero-intro { font-size: 14px; max-width: 310px; }
+  .hero::after { width: 290px; height: 290px; right: -155px; top: 170px; }
+  .hero-foot { bottom: 25px; font-size: 9px; }
+  .story-section, .distance-section { padding: 93px 0; }
+  .story-intro, .distance-layout { grid-template-columns: 1fr; gap: 39px; }
+  .story-heading { margin-top: 0; }
+  .story-copy { margin-left: 0; font-size: 14px; }
+  .distance-display { font-size: clamp(4rem, 18vw, 6rem); }
+  .proposal-section { padding: 105px 19px 105px; }
+  .proposal-title { font-size: clamp(4.3rem, 18vw, 7rem); }
+  .proposal-subtitle { font-size: 13px; }
+  .answer-zone { min-height: 135px; flex-direction: column; gap: 10px; }
+  .answer-button { min-width: 190px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+  .no-button { transform: none !important; }
+}.confirmation[hidden]{display:none}
+
+
+/* Stacked-page scroll: each section slides up and over the previous one */
+.letter-page > .stack{position:sticky;top:0;min-height:100dvh;background:hsl(var(--background));will-change:transform}
+.letter-page > .stack::before{content:'';position:absolute;inset:0;z-index:10;pointer-events:none;background:#282a48;opacity:var(--shade,0)}
+.letter-page > .stack + .stack{border-radius:30px 30px 0 0;box-shadow:0 -24px 70px rgba(40,42,72,.28)}
+.letter-page > .hero{background:#282a48}
+.letter-page > .distance-section{background:#f3e9df}
+.letter-page > .proposal-section{background:#e9d9d2}
+.letter-page > .story-section,.letter-page > .distance-section,.letter-page > .proposal-section{display:flex;flex-direction:column;justify-content:center}
+.letter-page > .distance-section .section-wrap,.letter-page > .story-section .section-wrap{width:min(1120px,calc(100% - 48px))}
+.letter-page > .s1{z-index:1}.letter-page > .s2{z-index:2}.letter-page > .s3{z-index:3}.letter-page > .s4{z-index:4}
+@media (max-width:760px){.letter-page > .stack + .stack{border-radius:22px 22px 0 0}.letter-page > .distance-section .section-wrap,.letter-page > .story-section .section-wrap{width:min(100% - 38px,600px)}}
+@media (prefers-reduced-motion:reduce){.letter-page > .stack::before{display:none}}
 </style>
-
 </head>
+<body>
+<main class="letter-page">
+  <section class="hero stack s1" id="top">
+    <nav class="top-nav section-wrap" aria-label="Page navigation">
+      <a class="wordmark" href="#top">for Brynlee</a>
+      <a class="nav-link" href="#the-letter">the letter ↓</a>
+    </nav>
+    <div class="section-wrap hero-content">
+      <span class="hero-kicker reveal">a small thing, written carefully</span>
+      <h1 class="reveal delay-1">For the girl who makes every moment feel like it <em>matters.</em></h1>
+      <p class="hero-intro reveal delay-2">Brynlee, this is a letter about everything I’ve been feeling but never quite knew how to put into words, because some things deserve to be said in a way you can hold onto forever.</p>
+    </div>
+    <div class="hero-foot section-wrap">
+      <span>one page / one question</span>
+      <span class="scroll-cue"><span></span> keep reading</span>
+    </div>
+  </section>
 
-<body> <iframe src="https://brynlee-love-letter--lucfollett.replit.app/" frameborder="0" scrolling="yes"> </iframe> </body> </html>
+  <section class="story-section stack s2" id="the-letter">
+    <div class="section-wrap story-intro">
+      <div><span class="section-label">01 / the letter</span></div>
+      <div>
+        <h2 class="story-heading">I have learned that the smallest moments can mean the most.</h2>
+        <div class="story-copy">
+          <p>It is in the message you send when a thought is still warm. In the way a call can begin with, “I have nothing to say,” and somehow leave a whole evening feeling held. It is in the hours spent talking about everything and nothing, in falling asleep on the phone, and in the nights spent playing games together where it hardly matters what we’re doing, as long as you’re there.</p>
+          <p>I think there is something special about the moments that do not need to be planned. The conversations that stretch far past when we meant to go to sleep, the games that somehow turn into hours, and the calls where neither of us really has anything left to say, but neither of us wants to be the first to hang up. Somehow, even the quiet moments feel like something worth keeping.</p>
+          <p>But <strong>you make the ordinary feel like something I will remember.</strong> It is not always about doing something exciting or having something important to say. Sometimes it is just hearing your voice, laughing over something stupid, or knowing that somewhere in the middle of an ordinary day, I get to share a little piece of it with you. And I think that is what I love most—not that every moment is extraordinary, but that somehow, with you, even the simplest ones feel like they are.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="distance-section stack s3">
+    <div class="section-wrap distance-layout">
+      <div>
+        <span class="section-label">02 / the little things</span>
+        <h2 class="distance-display">The moments I keep coming back to <em>are the simplest.</em></h2>
+      </div>
+      <div class="distance-copy">
+        <p>I love how easy it is to tell you everything: the thoughts that arrive out of nowhere, the jokes that would make no sense to anyone else, and the quiet that never needs to be filled. You make the ordinary feel warm, familiar, and worth remembering.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="proposal-section stack s4" id="the-question">
+    <div class="section-wrap">
+      <span class="proposal-kicker">the part I have been carrying around</span>
+      <h2 class="proposal-title">Brynlee, will you be my <em>girlfriend?</em></h2>
+      <p class="proposal-subtitle">No perfect answer is required. Just the honest one that feels like yours.</p>
+      <div class="answer-zone" id="zone">
+        <button class="answer-button yes-button" id="yes" type="button" aria-label="Yes, I will be your girlfriend">Yes, I will</button>
+        <button class="answer-button no-button" id="no" type="button" aria-label="Not yet">Not yet</button>
+      </div>
+      <p class="no-note" id="note" role="status" aria-live="polite"></p>
+      <div class="confirmation" id="confirm" role="status" aria-live="polite" hidden>
+        <strong>Then it is a yes from me, too.</strong>
+        <p>Thank you for choosing this with me, Brynlee. I cannot promise every day will be easy, but I can promise to keep showing up with an open heart and a message waiting.</p>
+      </div>
+    </div>
+  </section>
+  <div class="confetti-layer" id="confetti" aria-hidden="true"></div>
+</main>
+<script>
+(function(){
+  var colors=['#c26550','#d6b37c','#282a48','#e39a82','#f7eee6'];
+  var yes=document.getElementById('yes'),no=document.getElementById('no'),note=document.getElementById('note'),
+      confirmEl=document.getElementById('confirm'),layer=document.getElementById('confetti');
+  var accepted=false,dodged=false,off={x:0,y:0};
+
+  yes.addEventListener('click',function(){
+    accepted=true;note.textContent='';confirmEl.hidden=false;layer.innerHTML='';
+    for(var i=0;i<56;i++){
+      var s=document.createElement('span');s.className='confetti-piece';
+      s.style.setProperty('--x',Math.round((Math.random()-.5)*920)+'px');
+      s.style.setProperty('--r',Math.round((Math.random()-.5)*900)+'deg');
+      s.style.setProperty('--delay',(Math.random()*.45).toFixed(2)+'s');
+      s.style.setProperty('--confetti',colors[i%colors.length]);
+      layer.appendChild(s);
+    }
+  });
+
+  function move(e){
+    if(accepted)return;
+    var touch=e.pointerType!=='mouse';
+    if(touch&&e.type!=='pointerdown')return;
+    var nr=no.getBoundingClientRect(),yr=yes.getBoundingClientRect();
+    var pad=16,gap=28,W=window.innerWidth,H=window.innerHeight;
+    if(touch){
+      // Touch: jump anywhere on screen that isn't near the Yes button or the finger
+      var bl=nr.left-off.x,bt=nr.top-off.y,px=e.clientX,py=e.clientY,ok=false,tx=off.x,ty=off.y;
+      for(var k=0;k<60&&!ok;k++){
+        var l=pad+Math.random()*Math.max(0,W-nr.width-2*pad);
+        var tp=pad+Math.random()*Math.max(0,H-nr.height-2*pad);
+        var hitsYes=l<yr.right+gap&&l+nr.width>yr.left-gap&&tp<yr.bottom+gap&&tp+nr.height>yr.top-gap;
+        var nearFinger=px>=l-90&&px<=l+nr.width+90&&py>=tp-90&&py<=tp+nr.height+90;
+        if(!hitsYes&&!nearFinger){tx=Math.round(l-bl);ty=Math.round(tp-bt);ok=true;}
+      }
+      off={x:tx,y:ty};
+      no.style.transform='translate('+tx+'px,'+ty+'px)';
+      note.textContent='That answer is feeling a little shy.';
+      dodged=true;
+      return;
+    }
+    var baseLeft=nr.left-off.x,baseTop=nr.top-off.y;
+    var leftStart=pad,leftEnd=Math.max(leftStart,yr.left-nr.width-gap);
+    var rightStart=Math.min(W-nr.width-pad,yr.right+gap),rightEnd=W-nr.width-pad;
+    var lw=Math.max(0,leftEnd-leftStart),rw=Math.max(0,rightEnd-rightStart);
+    var vr=Math.min(300,Math.max(150,H*.32)),bottom=H-nr.height-pad,cp=72;
+    var tl=rightStart,tt=Math.max(pad,Math.min(bottom,baseTop));
+    for(var a=0;a<30;a++){
+      var goLeft=lw>0&&(rw===0||Math.random()<.5);
+      var cl=goLeft?leftStart+Math.random()*lw:rightStart+Math.random()*rw;
+      var ct=Math.max(pad,Math.min(bottom,baseTop+(Math.random()-.5)*vr));
+      var near=e.clientX>=cl-cp&&e.clientX<=cl+nr.width+cp&&e.clientY>=ct-cp&&e.clientY<=ct+nr.height+cp;
+      if(!near){tl=cl;tt=ct;break;}
+    }
+    off={x:Math.round(tl-baseLeft),y:Math.round(tt-baseTop)};
+    no.style.transform='translate('+off.x+'px,'+off.y+'px)';
+    note.textContent='That answer is feeling a little shy.';
+  }
+  no.addEventListener('pointerenter',move);
+  no.addEventListener('pointerdown',move);
+  no.addEventListener('click',function(){
+    if(dodged){dodged=false;return;}
+    note.textContent='That is okay. There is no rush; the question will wait for you.';
+    off={x:0,y:0};no.style.transform='translate(0,0)';
+  });
+
+  // Stacked scroll: pin each page until the next one slides over it
+  var secs=[].slice.call(document.querySelectorAll('.stack'));
+  var still=window.matchMedia('(prefers-reduced-motion: reduce)').matches,ticking=false;
+  function layout(){
+    var H=window.innerHeight;
+    secs.forEach(function(s){s.style.top=Math.min(0,H-s.offsetHeight)+'px';});
+    update();
+  }
+  function update(){
+    ticking=false;
+    var H=window.innerHeight;
+    secs.forEach(function(s,i){
+      var n=secs[i+1];
+      if(!n||still){return;}
+      var p=Math.max(0,Math.min(1,(H-n.getBoundingClientRect().top)/H));
+      s.style.transform=p>0?'translateY('+(-p*70).toFixed(1)+'px)':'';
+      s.style.setProperty('--shade',(p*.4).toFixed(3));
+    });
+  }
+  window.addEventListener('scroll',function(){if(!ticking){ticking=true;requestAnimationFrame(update);}},{passive:true});
+  window.addEventListener('resize',layout);
+  window.addEventListener('load',layout);
+  if(window.ResizeObserver){var ro=new ResizeObserver(layout);secs.forEach(function(s){ro.observe(s);});}
+  if(document.fonts&&document.fonts.ready){document.fonts.ready.then(layout);}
+  layout();
+})();
+</script>
+</body>
+</html>
