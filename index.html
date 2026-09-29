@@ -66,7 +66,7 @@ button{font-family:inherit}
   box-shadow: 0 0 0 38px rgba(248, 240, 227, .03), 0 0 0 78px rgba(248, 240, 227, .025);
   animation: pulse-ring 8s ease-in-out infinite;
 }
-.hero-content { position: relative; z-index: 1; padding-block: 138px 110px; text-align: center; }
+.hero-content { position: relative; z-index: 1; padding-block: clamp(96px, 14vh, 138px) clamp(88px, 12vh, 110px); text-align: center; }
 .hero-kicker, .section-label {
   display: inline-flex;
   align-items: center;
@@ -84,10 +84,10 @@ button{font-family:inherit}
   opacity: .65;
 }
 .hero h1 {
-  max-width: 830px;
-  margin: 26px auto 24px;
-  font: 500 clamp(4.3rem, 11vw, 9.7rem)/.82 var(--app-font-serif);
-  letter-spacing: -.055em;
+  max-width: 900px;
+  margin: 28px auto 28px;
+  font: 500 clamp(3rem, min(9vw, 12.5vh), 8rem)/1.02 var(--app-font-serif);
+  letter-spacing: -.03em;
 }
 .hero h1 em { color: #e39a82; font-style: normal; }
 .hero-intro {
@@ -143,8 +143,8 @@ button{font-family:inherit}
 .story-heading {
   margin: 26px auto 28px;
   max-width: 740px;
-  font: 500 clamp(2.6rem, 5.6vw, 5.4rem)/.94 var(--app-font-serif);
-  letter-spacing: -.045em;
+  font: 500 clamp(2.2rem, min(5vw, 9vh), 4.6rem)/1.08 var(--app-font-serif);
+  letter-spacing: -.025em;
 }
 .story-copy { max-width: 575px; margin: 0 auto; color: #555469; font-size: 16px; line-height: 1.9; }
 .story-copy p { margin: 0 0 22px; }
@@ -154,9 +154,9 @@ button{font-family:inherit}
 
 .distance-section { padding: 105px 0 115px; background: #f3e9df; }
 .distance-layout { display: block; text-align: center; }
-.distance-display { max-width: 800px; margin: 26px auto 0; color: #282a48; font: 500 clamp(3.4rem, 7vw, 7rem)/.85 var(--app-font-serif); letter-spacing: -.06em; }
+.distance-display { max-width: 800px; margin: 26px auto 0; color: #282a48; font: 500 clamp(2.8rem, min(6.5vw, 12vh), 6.2rem)/1.04 var(--app-font-serif); letter-spacing: -.03em; }
 .distance-display em { color: #c26550; font-style: italic; }
-.distance-copy { max-width: 760px; margin: 48px auto 0; padding-top: 0; color: #626173; font-size: 19px; line-height: 1.9; }
+.distance-copy { max-width: 760px; margin: 40px auto 0; padding-top: 0; color: #626173; font-size: 19px; line-height: 1.9; }
 .distance-copy p { margin: 0 0 24px; }
 .distance-copy p:last-child { margin-bottom: 0; color: #282a48; font-weight: 600; }
 
@@ -164,7 +164,7 @@ button{font-family:inherit}
 .proposal-section { position: relative; padding: 125px 0 105px; background: #e9d9d2; text-align: center; }
 .proposal-section::after { content: ''; position: absolute; left: 50%; bottom: 0; width: 1px; height: 80px; background: rgba(40,42,72,.2); }
 .proposal-kicker { color: #c26550; font: 11px var(--app-font-mono); letter-spacing: .18em; text-transform: uppercase; }
-.proposal-title { max-width: 850px; margin: 24px auto 20px; color: #282a48; font: 500 clamp(3.7rem, 8.5vw, 8.7rem)/.79 var(--app-font-serif); letter-spacing: -.06em; }
+.proposal-title { max-width: 850px; margin: 28px auto 26px; color: #282a48; font: 500 clamp(2.8rem, min(8vw, 13vh), 7.5rem)/1.04 var(--app-font-serif); letter-spacing: -.03em; }
 .proposal-title em { color: #c26550; font-style: italic; }
 .proposal-subtitle { max-width: 420px; margin: 0 auto 47px; color: #73616a; font-size: 14px; line-height: 1.8; }
 .answer-zone { position: relative; min-height: 74px; width: min(455px, 100%); margin: auto; display: flex; align-items: center; justify-content: center; gap: 16px; }
@@ -208,7 +208,7 @@ button{font-family:inherit}
   .top-nav .nav-link { display: none; }
   .hero { min-height: 760px; }
   .hero-content { padding-block: 115px 90px; }
-  .hero h1 { font-size: clamp(4.3rem, 19vw, 7rem); }
+  .hero h1 { font-size: clamp(3rem, min(16vw, 10.5vh), 6rem); }
   .hero-intro { font-size: 14px; max-width: 310px; }
   .hero::after { width: 290px; height: 290px; right: -155px; top: 170px; }
   .hero-foot { bottom: 25px; font-size: 9px; }
@@ -216,9 +216,9 @@ button{font-family:inherit}
   .story-intro, .distance-layout { grid-template-columns: 1fr; gap: 39px; }
   .story-heading { margin-top: 0; }
   .story-copy { margin-left: 0; font-size: 14px; }
-  .distance-display { font-size: clamp(4rem, 18vw, 6rem); }
+  .distance-display { font-size: clamp(2.6rem, min(14vw, 10vh), 4.8rem); }
   .proposal-section { padding: 105px 19px 105px; }
-  .proposal-title { font-size: clamp(4.3rem, 18vw, 7rem); }
+  .proposal-title { font-size: clamp(2.8rem, min(15vw, 10vh), 5.6rem); }
   .proposal-subtitle { font-size: 13px; }
   .answer-zone { min-height: 135px; flex-direction: column; gap: 10px; }
   .answer-button { min-width: 190px; }
